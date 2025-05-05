@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:charts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+
+    BarBackgroundColor="White"
+    BarTextColor="Black"
+    SelectedTabColor="#007ACC"
+    UnselectedTabColor="#888"
+    
+    x:Class="DeviceInfoApp.MainPage">
+
+
+    <!-- Global Styles -->
+    <TabbedPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="CardStyle" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="12" />
+                <Setter Property="Padding" Value="16" />
+                <Setter Property="Margin" Value="0,8" />
+                <Setter Property="BackgroundColor" Value="#F5F5F5" />
+                <Setter Property="HasShadow" Value="True" />
+            </Style>
+            <Style x:Key="SectionHeaderStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="#333" />
+            </Style>
+            <Style x:Key="InfoLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="TextColor" Value="Black" />
+             </Style>
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Green" />
+            </Style>
+        </ResourceDictionary>
+    </TabbedPage.Resources>
+
+    <ContentPage Title="Laite tiedot">
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="0">
+
+                <!-- Processor Card -->
+                <Frame Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Prosessori" Style="{StaticResource SectionHeaderStyle}"/>
+                        <Label x:Name="CpuModelLabel"   Style="{StaticResource InfoLabelStyle}"/>
+                        <Label x:Name="CpuArchLabel"    Style="{StaticResource InfoLabelStyle}"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+
+                <Frame Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Verkkoyhteys" Style="{StaticResource SectionHeaderStyle}"/>
+                        <Label x:Name="NetworkAccessLabel"      Style="{StaticResource InfoLabelStyle}"/>
+                        <Label x:Name="ConnectionProfilesLabel" Style="{StaticResource InfoLabelStyle}"/>
+
+                        <!-- Uusi osio: Testaa verkkoyhteys -->
+                        <Button 
+                        x:Name="TestNetworkButton"
+                        Text="Testaa verkkoyhteys"
+                        Style="{StaticResource ButtonStyle}"
+                        Clicked="TestNetworkButton_Clicked"/>
+
+                        <Label x:Name="RxLabel"   Style="{StaticResource InfoLabelStyle}" Text="Received: – KB/s"/>
+                        <Label x:Name="TxLabel"   Style="{StaticResource InfoLabelStyle}" Text="Sent: – KB/s"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Display Card -->
+                <Frame Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Näyttö" Style="{StaticResource SectionHeaderStyle}"/>
+                        <Label x:Name="DisplayResolutionLabel" Style="{StaticResource InfoLabelStyle}"/>
+                        <Label x:Name="DisplayDensityLabel"    Style="{StaticResource InfoLabelStyle}"/>
+                    </VerticalStackLayout>
+                </Frame>
+                <!-- Laite (Valmistaja & malli) -->
+                <Frame Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Laite" Style="{StaticResource SectionHeaderStyle}"/>
+                        <Label x:Name="ManufacturerLabel" Style="{StaticResource InfoLabelStyle}"/>
+                        <Label x:Name="ModelLabel" Style="{StaticResource InfoLabelStyle}"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Käyttöjärjestelmä (OS-versio) -->
+                <Frame Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Käyttöjärjestelmä" Style="{StaticResource SectionHeaderStyle}"/>
+                        <Label x:Name="OSVersionLabel" Style="{StaticResource InfoLabelStyle}"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage>
+
+
+    <ContentPage Title="Akun tiedot">
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="0">
+                <Frame Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Akun tiedot" Style="{StaticResource SectionHeaderStyle}"/>
+                        <Label x:Name="BatteryLevelLabel" Style="{StaticResource InfoLabelStyle}"/>
+                        <Label x:Name="BatteryStateLabel" Style="{StaticResource InfoLabelStyle}"/>
+                        <Label x:Name="BatteryTempLabel"  Style="{StaticResource InfoLabelStyle}"/>
+                        <Label x:Name="BatteryVoltageLabel" Style="{StaticResource InfoLabelStyle}"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage>
+
+    <ContentPage Title="Muisti">
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="0">
+                <!-- Memory Card -->
+                <Frame Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Muisti" Style="{StaticResource SectionHeaderStyle}"/>
+                        <charts:ChartView
+            x:Name="MemoryChartView"
+            HeightRequest="200"/>
+                        <Label x:Name="MemoryTotalLabel" Style="{StaticResource InfoLabelStyle}"/>
+                        <Label x:Name="MemoryFreeLabel"  Style="{StaticResource InfoLabelStyle}"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage>
+
+    <ContentPage Title="Levytila">
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="0">
+                <Frame Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="4">
+                                <Label Text="Tallennustila" Style="{StaticResource SectionHeaderStyle}"/>
+                                <charts:ChartView
+                                  x:Name="StorageChartView"
+                                HeightRequest="200"/>
+                                <Label x:Name="StorageTotalLabel"
+                                Style="{StaticResource InfoLabelStyle}"
+                                FontAttributes="Bold"/>
+                                <Label x:Name="StorageFreeLabel"
+                                Style="{StaticResource InfoLabelStyle}"/>
+                       </VerticalStackLayout>
+                </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage>
+
+</TabbedPage>
