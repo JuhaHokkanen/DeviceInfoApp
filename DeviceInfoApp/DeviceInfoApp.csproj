@@ -24,7 +24,7 @@
 		<ApplicationTitle>DeviceInfoApp</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.deviceinfoapp</ApplicationId>
+		<ApplicationId>com.juhahokkanen.deviceinfoapp</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
